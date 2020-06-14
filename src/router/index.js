@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Users from '../views/Users.vue'
 import UserDetail from '../views/UserDetail.vue'
 import Login from '../views/Login.vue'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
 
 const router = new VueRouter({
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'Login' && !store.state.logedIn) next({ name: 'Login' })
+  else next()
 })
 
 export default router
